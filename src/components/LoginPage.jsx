@@ -26,7 +26,7 @@ export default function LoginPage() {
           <div className="login-logo">
             <span className="login-logo-icon">🎓</span>
           </div>
-          <h1 className="login-title">FADU</h1>
+          <h1 className="login-title">VacanteFADU</h1>
           <p className="login-subtitle">Sistema de Lista de Espera</p>
         </div>
 

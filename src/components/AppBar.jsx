@@ -25,7 +25,7 @@ export default function AppBar({ activeTab, onTabChange }) {
       <header className="appbar">
         <div className="appbar-brand">
           <span className="appbar-logo">🎓</span>
-          <span className="appbar-title">CupoFADU</span>
+          <span className="appbar-title">VacanteFADU</span>
         </div>
         <div className="appbar-user">
           <div className="appbar-user-info">
