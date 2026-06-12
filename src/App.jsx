@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { AppProvider, useApp } from './context/AppContext'
 import LoginPage from './components/LoginPage'
 import Onboarding from './components/Onboarding'
@@ -17,10 +17,20 @@ import ListasEspera from './components/admin/ListasEspera'
 import HistorialAdmin from './components/admin/HistorialAdmin'
 
 function AppInner() {
-  const { usuario, notificaciones } = useApp()
+  const { usuario, notificaciones, logout } = useApp()
   const [activeTab, setActiveTab] = useState(
     usuario?.rol === 'admin' ? 'dashboard' : 'materias'
   )
+
+  // Limpiar sesión cuando se cierra la pestaña
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      localStorage.removeItem('fadu_usuario')
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [])
 
   if (!usuario) return <LoginPage />
 
