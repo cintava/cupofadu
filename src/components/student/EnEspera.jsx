@@ -1,7 +1,27 @@
+import { useState } from 'react'
 import { useApp } from '../../context/AppContext'
+import ChatAlumnos from '../ChatAlumnos'
+import EncontraAula from '../EncontraAula'
+import Calendario from '../Calendario'
+import StudentFooter from './StudentFooter'
 
 export default function EnEspera() {
   const { usuario, materias, inscripciones, notificaciones } = useApp()
+  const [mostrarChat, setMostrarChat] = useState(false)
+  const [mostrarAula, setMostrarAula] = useState(false)
+  const [mostrarCalendario, setMostrarCalendario] = useState(false)
+
+  if (mostrarChat) {
+    return <ChatAlumnos onClose={() => setMostrarChat(false)} />
+  }
+
+  if (mostrarAula) {
+    return <EncontraAula onClose={() => setMostrarAula(false)} />
+  }
+
+  if (mostrarCalendario) {
+    return <Calendario onClose={() => setMostrarCalendario(false)} />
+  }
 
   // Inscripciones en espera
   const enEspera = inscripciones
@@ -118,6 +138,12 @@ export default function EnEspera() {
           </div>
         </>
       )}
+
+      <StudentFooter
+        onCalendarioClick={() => setMostrarCalendario(true)}
+        onChatClick={() => setMostrarChat(true)}
+        onAulaClick={() => setMostrarAula(true)}
+      />
     </div>
   )
 }

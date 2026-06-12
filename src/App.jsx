@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { AppProvider, useApp } from './context/AppContext'
 import LoginPage from './components/LoginPage'
+import Onboarding from './components/Onboarding'
 import AppBar from './components/AppBar'
 import ToastContainer from './components/ToastContainer'
 import NotificationModal from './components/student/NotificationModal'
@@ -22,6 +23,9 @@ function AppInner() {
   )
 
   if (!usuario) return <LoginPage />
+
+  // Mostrar onboarding si estudiante no completó perfil
+  if (usuario.rol !== 'admin' && !usuario.perfil) return <Onboarding />
 
   // Notificación pendiente para este estudiante — se muestra en cualquier pestaña
   const notifPendiente = usuario.rol !== 'admin' && notificaciones.find(

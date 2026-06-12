@@ -20,6 +20,22 @@ const load = (key, fallback) => {
 }
 const save = (key, value) => localStorage.setItem(key, JSON.stringify(value))
 
+// Cálculo de score para ordenar listas de espera
+const calcularScore = (usuario) => {
+  if (!usuario?.perfil) return 0
+  let score = 0
+  // Factor permanencia (años en carrera): 0-30 pts
+  score += Math.min((usuario.perfil.anosCarrera || 1) * 10, 30)
+  // Materias cursadas: 0-25 pts
+  score += Math.min((usuario.perfil.materiasCursadas || 0) * 2.5, 25)
+  // Tipo de estudiante: 0-20 pts (regular > trabajador > otros)
+  const tipoScore = { regular: 20, trabajador: 10, otros: 5 }
+  score += tipoScore[usuario.perfil.tipoEstudiante] || 0
+  // Preferencia de turno + bonus (si coincide): 0-25 pts
+  score += 15 // base
+  return Math.round(score)
+}
+
 export function AppProvider({ children }) {
   const [usuario, setUsuario] = useState(() => load('fadu_usuario', null))
   const [materias, setMaterias] = useState(() => load('fadu_materias', INITIAL_MATERIAS))
@@ -27,6 +43,12 @@ export function AppProvider({ children }) {
   const [notificaciones, setNotificaciones] = useState(() => load('fadu_notificaciones', INITIAL_NOTIFICACIONES))
   const [historial, setHistorial] = useState(() => load('fadu_historial', INITIAL_HISTORIAL))
   const [toasts, setToasts] = useState([])
+
+  // Agregar score del usuario cada vez que cambia el perfil
+  const usuarioConScore = usuario ? {
+    ...usuario,
+    score: calcularScore(usuario)
+  } : null
 
   // Persistir en localStorage ante cada cambio
   useEffect(() => { save('fadu_usuario', usuario) }, [usuario])
@@ -56,6 +78,22 @@ export function AppProvider({ children }) {
   const logout = useCallback(() => {
     setUsuario(null)
   }, [])
+
+  // ─── Perfil académico ──────────────────────────────────────────────────────
+  const actualizarPerfil = useCallback((perfil) => {
+    setUsuario(prev => ({
+      ...prev,
+      perfil: {
+        carrera: perfil.carrera,
+        anosCarrera: parseInt(perfil.anosCarrera) || 1,
+        materiasCursadas: parseInt(perfil.materiasCursadas) || 0,
+        tipoEstudiante: perfil.tipoEstudiante || 'regular',
+        turnoPreferido: perfil.turnoPreferido || 'mañana',
+        completadoEn: new Date().toISOString()
+      }
+    }))
+    addToast('Perfil académico actualizado', 'success')
+  }, [addToast])
 
   // ─── Utilidades internas ──────────────────────────────────────────────────
 
@@ -307,7 +345,7 @@ export function AppProvider({ children }) {
   }, [addToast])
 
   const value = {
-    usuario, login, logout,
+    usuario: usuarioConScore, login, logout, actualizarPerfil,
     materias, setMaterias,
     inscripciones,
     notificaciones,

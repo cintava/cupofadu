@@ -1,4 +1,9 @@
+import { useState } from 'react'
 import { useApp } from '../../context/AppContext'
+import ChatAlumnos from '../ChatAlumnos'
+import EncontraAula from '../EncontraAula'
+import Calendario from '../Calendario'
+import StudentFooter from './StudentFooter'
 
 const TIPO_CONFIG = {
   baja: { label: 'Baja registrada', icon: '📤', className: 'hist-baja' },
@@ -8,6 +13,21 @@ const TIPO_CONFIG = {
 
 export default function MiHistorial() {
   const { usuario, historial } = useApp()
+  const [mostrarChat, setMostrarChat] = useState(false)
+  const [mostrarAula, setMostrarAula] = useState(false)
+  const [mostrarCalendario, setMostrarCalendario] = useState(false)
+
+  if (mostrarChat) {
+    return <ChatAlumnos onClose={() => setMostrarChat(false)} />
+  }
+
+  if (mostrarAula) {
+    return <EncontraAula onClose={() => setMostrarAula(false)} />
+  }
+
+  if (mostrarCalendario) {
+    return <Calendario onClose={() => setMostrarCalendario(false)} />
+  }
 
   const miHistorial = historial.filter(h => h.estudianteId === usuario.legajo)
 
@@ -43,6 +63,12 @@ export default function MiHistorial() {
           })}
         </div>
       )}
+
+      <StudentFooter
+        onCalendarioClick={() => setMostrarCalendario(true)}
+        onChatClick={() => setMostrarChat(true)}
+        onAulaClick={() => setMostrarAula(true)}
+      />
     </div>
   )
 }

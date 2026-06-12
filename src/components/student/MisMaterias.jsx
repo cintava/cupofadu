@@ -1,9 +1,20 @@
 import { useState } from 'react'
 import { useApp } from '../../context/AppContext'
+import BuscarMateria from '../BuscarMateria'
+import DetalleMateria from '../DetalleMateria'
+import ChatAlumnos from '../ChatAlumnos'
+import EncontraAula from '../EncontraAula'
+import Calendario from '../Calendario'
+import StudentFooter from './StudentFooter'
 
 export default function MisMaterias() {
   const { usuario, materias, inscripciones, inscribirseDirecto, inscribirseEnEspera, registrarBaja } = useApp()
-  const [confirmBaja, setConfirmBaja] = useState(null) // { materiaId, materiaNombre }
+  const [confirmBaja, setConfirmBaja] = useState(null)
+  const [mostrarBuscar, setMostrarBuscar] = useState(false)
+  const [detalleMateria, setDetalleMateria] = useState(null)
+  const [mostrarChat, setMostrarChat] = useState(false)
+  const [mostrarAula, setMostrarAula] = useState(false)
+  const [mostrarCalendario, setMostrarCalendario] = useState(false)
 
   const miEstado = (materiaId) =>
     inscripciones.find(
@@ -16,10 +27,30 @@ export default function MisMaterias() {
     setConfirmBaja(null)
   }
 
+  if (mostrarBuscar) {
+    return <BuscarMateria onClose={() => setMostrarBuscar(false)} />
+  }
+
+  if (detalleMateria) {
+    return <DetalleMateria materiaId={detalleMateria} onClose={() => setDetalleMateria(null)} />
+  }
+
+  if (mostrarChat) {
+    return <ChatAlumnos onClose={() => setMostrarChat(false)} />
+  }
+
+  if (mostrarAula) {
+    return <EncontraAula onClose={() => setMostrarAula(false)} />
+  }
+
+  if (mostrarCalendario) {
+    return <Calendario onClose={() => setMostrarCalendario(false)} />
+  }
+
   return (
     <div className="view-container">
 
-      <h2 className="view-title">Materias</h2>
+      <h2 className="view-title">Mis Materias</h2>
       <p className="view-subtitle">
         Inscribite si hay lugar, anotate en lista de espera si está llena, o date de baja si ya estás inscripto.
       </p>
@@ -103,6 +134,22 @@ export default function MisMaterias() {
           )
         })}
       </div>
+
+      {/* FAB Button */}
+      <button
+        className="fab-button"
+        onClick={() => setMostrarBuscar(true)}
+        title="Buscar materia"
+      >
+        +
+      </button>
+
+      {/* Footer Actions */}
+      <StudentFooter
+        onCalendarioClick={() => setMostrarCalendario(true)}
+        onChatClick={() => setMostrarChat(true)}
+        onAulaClick={() => setMostrarAula(true)}
+      />
 
       {/* Modal de confirmación de baja */}
       {confirmBaja && (
