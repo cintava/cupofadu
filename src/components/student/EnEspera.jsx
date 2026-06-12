@@ -3,7 +3,6 @@ import { useApp } from '../../context/AppContext'
 import ChatAlumnos from '../ChatAlumnos'
 import EncontraAula from '../EncontraAula'
 import Calendario from '../Calendario'
-import StudentFooter from './StudentFooter'
 
 export default function EnEspera() {
   const { usuario, materias, inscripciones, notificaciones } = useApp()
@@ -139,11 +138,6 @@ export default function EnEspera() {
         </>
       )}
 
-      <StudentFooter
-        onCalendarioClick={() => setMostrarCalendario(true)}
-        onChatClick={() => setMostrarChat(true)}
-        onAulaClick={() => setMostrarAula(true)}
-      />
     </div>
   )
 }

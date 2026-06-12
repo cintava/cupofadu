@@ -5,7 +5,6 @@ import DetalleMateria from '../DetalleMateria'
 import ChatAlumnos from '../ChatAlumnos'
 import EncontraAula from '../EncontraAula'
 import Calendario from '../Calendario'
-import StudentFooter from './StudentFooter'
 
 export default function MisMaterias() {
   const { usuario, materias, inscripciones, inscribirseDirecto, inscribirseEnEspera, registrarBaja } = useApp()
@@ -178,12 +177,6 @@ export default function MisMaterias() {
         +
       </button>
 
-      {/* Footer Actions */}
-      <StudentFooter
-        onCalendarioClick={() => setMostrarCalendario(true)}
-        onChatClick={() => setMostrarChat(true)}
-        onAulaClick={() => setMostrarAula(true)}
-      />
 
       {/* Modal de confirmación de baja */}
       {confirmBaja && (

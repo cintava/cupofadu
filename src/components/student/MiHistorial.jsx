@@ -3,7 +3,6 @@ import { useApp } from '../../context/AppContext'
 import ChatAlumnos from '../ChatAlumnos'
 import EncontraAula from '../EncontraAula'
 import Calendario from '../Calendario'
-import StudentFooter from './StudentFooter'
 
 const TIPO_CONFIG = {
   baja: { label: 'Baja registrada', icon: '📤', className: 'hist-baja' },
@@ -64,11 +63,6 @@ export default function MiHistorial() {
         </div>
       )}
 
-      <StudentFooter
-        onCalendarioClick={() => setMostrarCalendario(true)}
-        onChatClick={() => setMostrarChat(true)}
-        onAulaClick={() => setMostrarAula(true)}
-      />
     </div>
   )
 }
