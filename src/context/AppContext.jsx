@@ -65,13 +65,14 @@ export function AppProvider({ children }) {
   }, [])
 
   // ─── Auth ─────────────────────────────────────────────────────────────────
-  const login = useCallback((legajo, password) => {
+  const login = useCallback((dni, password) => {
+    // Buscar por DNI (legajo sirve como DNI en el sistema)
     const estudiante = INITIAL_ESTUDIANTES.find(
-      e => e.legajo === legajo && e.password === password
+      e => e.legajo === dni && e.password === password
     )
-    if (!estudiante) return { ok: false, error: 'Legajo o contraseña incorrectos' }
+    if (!estudiante) return { ok: false, error: 'DNI o contraseña incorrectos' }
     const { password: _, ...datosSeguros } = estudiante
-    setUsuario({ ...datosSeguros, rol: estudiante.rol || 'estudiante' })
+    setUsuario({ ...datosSeguros, rol: estudiante.rol || 'estudiante', perfil: null })
     return { ok: true }
   }, [])
 

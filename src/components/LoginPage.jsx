@@ -32,9 +32,9 @@ export default function LoginPage() {
 
         <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="legajo" className="form-label">Legajo</label>
+            <label htmlFor="dni" className="form-label">DNI</label>
             <input
-              id="legajo"
+              id="dni"
               type="text"
               className="form-input"
               placeholder="ej. 12345"
@@ -67,21 +67,21 @@ export default function LoginPage() {
         </form>
 
         <div className="login-demo">
-          <p className="login-demo-title">Usuarios de prueba:</p>
+          <p className="login-demo-title">DNI de prueba:</p>
           <div className="login-demo-users">
             {[
-              { legajo: '12345', nombre: 'Cintia' },
-              { legajo: '67890', nombre: 'Tomás' },
-              { legajo: '11111', nombre: 'Valentina' },
-              { legajo: '22222', nombre: 'Matías' },
-              { legajo: '33333', nombre: 'Lucía' },
-              { legajo: '44444', nombre: 'Bruno' },
-              { legajo: '55555', nombre: 'Agustina' },
+              { dni: '12345', nombre: 'Cintia' },
+              { dni: '67890', nombre: 'Tomás' },
+              { dni: '11111', nombre: 'Valentina' },
+              { dni: '22222', nombre: 'Matías' },
+              { dni: '33333', nombre: 'Lucía' },
+              { dni: '44444', nombre: 'Bruno' },
+              { dni: '55555', nombre: 'Agustina' },
             ].map(u => (
               <span
-                key={u.legajo}
+                key={u.dni}
                 className="demo-chip"
-                onClick={() => { setLegajo(u.legajo); setPassword(u.legajo) }}
+                onClick={() => { setLegajo(u.dni); setPassword(u.dni) }}
               >
                 {u.nombre}
               </span>
