@@ -62,6 +62,25 @@ export default function MisMaterias() {
             <span className="score-valor">{usuario?.score || 0}</span>
             <span className="score-label">score %</span>
           </div>
+          {/* Acciones rápidas */}
+          <div className="header-acciones">
+            <button className="header-action-btn" onClick={() => setMostrarCalendario(true)} title="Calendario">
+              <span>📅</span>
+              <span>Calendario</span>
+            </button>
+            <button className="header-action-btn" onClick={() => setMostrarChat(true)} title="Chat">
+              <span>💬</span>
+              <span>Chat</span>
+            </button>
+            <button className="header-action-btn" onClick={() => setMostrarAula(true)} title="Encontrá Aula">
+              <span>🔍</span>
+              <span>Encontrá Aula</span>
+            </button>
+            <button className="header-action-btn" title="Mi Perfil">
+              <span>⚙️</span>
+              <span>Mi Perfil</span>
+            </button>
+          </div>
         </div>
       </div>
 
