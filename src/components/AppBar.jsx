@@ -29,10 +29,13 @@ export default function AppBar({ activeTab, onTabChange }) {
         </div>
         <div className="appbar-user">
           <div className="appbar-user-info">
-            <span className="appbar-user-name">{usuario?.nombre}</span>
-            <span className={`appbar-role-badge ${usuario?.rol === 'admin' ? 'role-admin' : 'role-student'}`}>
-              {usuario?.rol === 'admin' ? 'Administrador' : 'Estudiante · ' + usuario?.legajo}
-            </span>
+            {usuario?.rol === 'admin' ? (
+              <>
+                <span className="appbar-user-name">Administrador</span>
+              </>
+            ) : (
+              <span className="appbar-user-name">Legajo: {usuario?.legajo}</span>
+            )}
           </div>
           <div className="appbar-actions">
             {/* Solo mostrar reset en dev/demo */}
