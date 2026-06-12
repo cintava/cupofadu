@@ -50,6 +50,21 @@ export default function MisMaterias() {
   return (
     <div className="view-container">
 
+      {/* Header con info del usuario */}
+      <div className="mis-materias-header">
+        <div className="header-logo">🎓</div>
+        <div className="header-info">
+          <h3 className="header-nombre">{usuario?.nombre}</h3>
+          <p className="header-legajo">DNI {usuario?.legajo}</p>
+        </div>
+        <div className="header-score">
+          <div className="score-badge">
+            <span className="score-valor">{usuario?.score || 0}</span>
+            <span className="score-label">score %</span>
+          </div>
+        </div>
+      </div>
+
       <h2 className="view-title">Mis Materias</h2>
       <p className="view-subtitle">
         Inscribite si hay lugar, anotate en lista de espera si está llena, o date de baja si ya estás inscripto.
