@@ -50,9 +50,13 @@ export default function MisMaterias() {
   return (
     <div className="view-container">
 
-      {/* Header con score */}
+      {/* Header con info del usuario */}
       <div className="mis-materias-header">
-        <div className="header-dni">DNI {usuario?.legajo}</div>
+        <div className="header-logo">🎓</div>
+        <div className="header-info">
+          <h3 className="header-nombre">{usuario?.nombre}</h3>
+          <p className="header-legajo">DNI {usuario?.legajo}</p>
+        </div>
         <div className="header-score">
           <div className="score-badge">
             <span className="score-valor">{usuario?.score || 0}</span>
