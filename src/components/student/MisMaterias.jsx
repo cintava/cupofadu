@@ -76,7 +76,7 @@ export default function MisMaterias() {
               <span>Encontrá Aula</span>
             </button>
             <button className="header-action-btn" title="Mi Perfil">
-              <span>⚙️</span>
+              <span>👨‍🎓</span>
               <span>Mi Perfil</span>
             </button>
           </div>
