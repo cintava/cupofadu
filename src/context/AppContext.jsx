@@ -340,7 +340,7 @@ export function AppProvider({ children }) {
     const posicion = nuevasInscripciones.find(i => i.id === nueva.id)?.posicion || 1
     addToast(`Posición #${posicion}`, 'info')
     return { ok: true }
-  }, [materias, inscripciones, addToast])
+  }, [materias, inscripciones, recalcularPosiciones, addToast])
 
   // ─── Resetear datos (útil para demos) ─────────────────────────────────────
   const resetearDatos = useCallback(() => {
