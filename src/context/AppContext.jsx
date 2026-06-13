@@ -167,7 +167,6 @@ export function AppProvider({ children }) {
       updated = recalcularPosiciones(updated, materiaId)
       setInscripciones(updated)
       setHistorial(prev => [{ id: Date.now(), tipo: 'baja', estudianteId, materiaId, materiaNombre: materia?.nombre, timestamp: new Date().toISOString(), detalle: 'Salió de la lista de espera' }, ...prev])
-      addToast(`Saliste de la lista de espera de ${materia?.nombre}.`, 'info')
       return { ok: true }
     }
 
@@ -202,13 +201,10 @@ export function AppProvider({ children }) {
 
     if (siguiente) {
       generarNotificacion(siguiente, 'baja')
-      addToast(`¡Notificación enviada al siguiente en lista de ${materia?.nombre}!`, 'success')
-    } else {
-      addToast(`Baja registrada. No hay estudiantes en lista de espera para ${materia?.nombre}.`, 'info')
     }
 
     return { ok: true }
-  }, [inscripciones, materias, generarNotificacion, addToast])
+  }, [inscripciones, materias, generarNotificacion])
 
   // ─── Estudiante acepta vacante ─────────────────────────────────────────────
   const aceptarVacante = useCallback((notificacionId) => {
