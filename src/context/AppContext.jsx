@@ -337,8 +337,10 @@ export function AppProvider({ children }) {
     const nuevasInscripciones = recalcularPosiciones([...inscripciones, nueva], materiaId)
     setInscripciones(nuevasInscripciones)
 
+    const posicion = nuevasInscripciones.find(i => i.id === nueva.id)?.posicion || 1
+    addToast(`Posición #${posicion}`, 'info')
     return { ok: true }
-  }, [materias, inscripciones, recalcularPosiciones])
+  }, [materias, inscripciones, recalcularPosiciones, addToast])
 
   // ─── Resetear datos (útil para demos) ─────────────────────────────────────
   const resetearDatos = useCallback(() => {
