@@ -334,13 +334,13 @@ export function AppProvider({ children }) {
     }
 
     // Agregar y recalcular posiciones por score
-    const nuevasInscripciones = recalcularPosiciones([...inscripciones, nueva], materiaId)
+    const nuevasInscripciones = recalcularPosiciones([...inscripciones, nueva], materiaId, estudiantes)
     setInscripciones(nuevasInscripciones)
 
     const posicion = nuevasInscripciones.find(i => i.id === nueva.id)?.posicion || 1
     addToast(`Posición #${posicion}`, 'info')
     return { ok: true }
-  }, [materias, inscripciones, recalcularPosiciones, addToast])
+  }, [materias, inscripciones, estudiantes, recalcularPosiciones, addToast])
 
   // ─── Resetear datos (útil para demos) ─────────────────────────────────────
   const resetearDatos = useCallback(() => {
