@@ -333,14 +333,11 @@ export function AppProvider({ children }) {
       timestamp: new Date().toISOString(),
     }
 
-    setInscripciones(prev => {
-      const nuevas = [...prev, nueva]
-      const actualizado = recalcularPosiciones(nuevas, materiaId, estudiantes)
-      const posicion = actualizado.find(i => i.id === nueva.id)?.posicion || 1
-      addToast(`Posición #${posicion}`, 'info')
-      return actualizado
-    })
+    const nuevasInscripciones = recalcularPosiciones([...inscripciones, nueva], materiaId, estudiantes)
+    setInscripciones(nuevasInscripciones)
 
+    const posicion = nuevasInscripciones.find(i => i.id === nueva.id)?.posicion || 1
+    addToast(`Posición #${posicion}`, 'info')
     return { ok: true }
   }, [materias, inscripciones, addToast])
 
