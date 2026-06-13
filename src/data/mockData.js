@@ -13,7 +13,7 @@ export const INITIAL_MATERIAS = [
 ]
 
 export const INITIAL_ESTUDIANTES = [
-  { legajo: '12345', nombre: 'Cintia Avalos',    email: 'cintia@fadu.uba.ar',  carrera: 'DEIS', password: '12345' },
+  { legajo: '12345', nombre: 'Martina García',    email: 'martina@fadu.uba.ar',  carrera: 'DEIS', password: '12345' },
   { legajo: '67890', nombre: 'Tomás Herrera',    email: 'tomas@fadu.uba.ar',   carrera: 'DEIS', password: '67890' },
   { legajo: '11111', nombre: 'Valentina Cruz',   email: 'valen@fadu.uba.ar',   carrera: 'DEIS', password: '11111' },
   { legajo: '22222', nombre: 'Matías Soria',     email: 'matias@fadu.uba.ar',  carrera: 'DEIS', password: '22222' },
@@ -25,7 +25,7 @@ export const INITIAL_ESTUDIANTES = [
 ]
 
 export const INITIAL_INSCRIPCIONES = [
-  // ── Cintia (12345)
+  // ── Martina (12345)
   // inscripta en Dirección de Cámara (con cupo libre → puede probar inscribirte)
   { id: 1,  estudianteId: '12345', materiaId: 1, estado: 'inscripto', posicion: null, timestamp: '2026-05-01T09:00:00Z' },
   // en espera #1 en Edición Digital (llena)
