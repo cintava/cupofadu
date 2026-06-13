@@ -93,8 +93,7 @@ export function AppProvider({ children }) {
         completadoEn: new Date().toISOString()
       }
     }))
-    addToast('Perfil académico actualizado', 'success')
-  }, [addToast])
+  }, [])
 
   // ─── Utilidades internas ──────────────────────────────────────────────────
 
