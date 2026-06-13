@@ -336,9 +336,8 @@ export function AppProvider({ children }) {
     }
 
     setInscripciones(prev => [...prev, nueva])
-    addToast(`Posición #${nuevaPosicion}`, 'info')
     return { ok: true }
-  }, [materias, inscripciones, addToast])
+  }, [materias, inscripciones])
 
   // ─── Resetear datos (útil para demos) ─────────────────────────────────────
   const resetearDatos = useCallback(() => {
