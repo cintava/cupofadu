@@ -105,13 +105,13 @@ export function AppProvider({ children }) {
   }, [inscripciones])
 
   /** Recalcula posiciones en lista de espera de una materia */
-  const recalcularPosiciones = useCallback((updatedList, materiaId) => {
+  const recalcularPosiciones = useCallback((updatedList, materiaId, ests = estudiantes) => {
     const enEspera = updatedList.filter(i => i.materiaId === materiaId && i.estado === 'espera')
 
     // Ordenar por score descendente (mayor score = mejor posición #1)
     const conScore = enEspera.map(insc => ({
       ...insc,
-      score: calcularScore(estudiantes.find(e => e.legajo === insc.estudianteId)) || 0
+      score: calcularScore(ests.find(e => e.legajo === insc.estudianteId)) || 0
     })).sort((a, b) => b.score - a.score)
 
     // Asignar nuevas posiciones
@@ -125,7 +125,7 @@ export function AppProvider({ children }) {
       const actualizada = posicionadas.find(p => p.id === i.id)
       return actualizada || i
     })
-  }, [estudiantes])
+  }, [])
 
   /** Genera una notificación para el siguiente en espera */
   const generarNotificacion = useCallback((inscripcionEspera, motivo) => {
