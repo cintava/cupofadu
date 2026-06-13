@@ -106,14 +106,26 @@ export function AppProvider({ children }) {
 
   /** Recalcula posiciones en lista de espera de una materia */
   const recalcularPosiciones = useCallback((updatedList, materiaId) => {
-    let pos = 1
+    const enEspera = updatedList.filter(i => i.materiaId === materiaId && i.estado === 'espera')
+
+    // Ordenar por score descendente (mayor score = mejor posición #1)
+    const conScore = enEspera.map(insc => ({
+      ...insc,
+      score: calcularScore(estudiantes.find(e => e.legajo === insc.estudianteId)) || 0
+    })).sort((a, b) => b.score - a.score)
+
+    // Asignar nuevas posiciones
+    const posicionadas = conScore.map((insc, idx) => ({
+      ...insc,
+      posicion: idx + 1
+    }))
+
+    // Reemplazar en la lista original
     return updatedList.map(i => {
-      if (i.materiaId === materiaId && i.estado === 'espera') {
-        return { ...i, posicion: pos++ }
-      }
-      return i
+      const actualizada = posicionadas.find(p => p.id === i.id)
+      return actualizada || i
     })
-  }, [])
+  }, [estudiantes])
 
   /** Genera una notificación para el siguiente en espera */
   const generarNotificacion = useCallback((inscripcionEspera, motivo) => {
@@ -318,8 +330,6 @@ export function AppProvider({ children }) {
     )
     if (yaExiste) return { ok: false, error: 'Ya estás inscripto o en lista de espera' }
 
-    const enEspera = inscripciones.filter(i => i.materiaId === materiaId && i.estado === 'espera')
-    const nuevaPos = enEspera.length + 1
     const materia = materias.find(m => m.id === materiaId)
 
     const nueva = {
@@ -327,13 +337,18 @@ export function AppProvider({ children }) {
       estudianteId,
       materiaId,
       estado: 'espera',
-      posicion: nuevaPos,
+      posicion: 1, // será recalculada
       timestamp: new Date().toISOString(),
     }
-    setInscripciones(prev => [...prev, nueva])
-    addToast(`Quedaste en lista de espera para ${materia?.nombre}. Posición #${nuevaPos}.`, 'info')
+
+    // Agregar y recalcular posiciones por score
+    const nuevasInscripciones = recalcularPosiciones([...inscripciones, nueva], materiaId)
+    setInscripciones(nuevasInscripciones)
+
+    const posicion = nuevasInscripciones.find(i => i.id === nueva.id)?.posicion || 1
+    addToast(`Quedaste en lista de espera para ${materia?.nombre}. Posición #${posicion}.`, 'info')
     return { ok: true }
-  }, [materias, inscripciones, addToast])
+  }, [materias, inscripciones, recalcularPosiciones, addToast])
 
   // ─── Resetear datos (útil para demos) ─────────────────────────────────────
   const resetearDatos = useCallback(() => {
