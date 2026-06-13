@@ -159,13 +159,11 @@ export function AppProvider({ children }) {
 
     const materia = materias.find(m => m.id === materiaId)
 
-    // Si era espera → simplemente eliminar de la lista y recalcular posiciones
+    // Si era espera → simplemente marcar como baja
     if (enEspera) {
-      let updated = inscripciones.map(i =>
+      setInscripciones(prev => prev.map(i =>
         i.id === enEspera.id ? { ...i, estado: 'baja' } : i
-      )
-      updated = recalcularPosiciones(updated, materiaId)
-      setInscripciones(updated)
+      ))
       setHistorial(prev => [{ id: Date.now(), tipo: 'baja', estudianteId, materiaId, materiaNombre: materia?.nombre, timestamp: new Date().toISOString(), detalle: 'Salió de la lista de espera' }, ...prev])
       return { ok: true }
     }
