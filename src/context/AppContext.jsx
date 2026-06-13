@@ -329,18 +329,20 @@ export function AppProvider({ children }) {
       estudianteId,
       materiaId,
       estado: 'espera',
-      posicion: 1, // será recalculada
+      posicion: 1,
       timestamp: new Date().toISOString(),
     }
 
-    // Agregar y recalcular posiciones por score
-    const nuevasInscripciones = recalcularPosiciones([...inscripciones, nueva], materiaId, estudiantes)
-    setInscripciones(nuevasInscripciones)
+    setInscripciones(prev => {
+      const nuevas = [...prev, nueva]
+      const actualizado = recalcularPosiciones(nuevas, materiaId, estudiantes)
+      const posicion = actualizado.find(i => i.id === nueva.id)?.posicion || 1
+      addToast(`Posición #${posicion}`, 'info')
+      return actualizado
+    })
 
-    const posicion = nuevasInscripciones.find(i => i.id === nueva.id)?.posicion || 1
-    addToast(`Posición #${posicion}`, 'info')
     return { ok: true }
-  }, [materias, inscripciones, recalcularPosiciones, addToast])
+  }, [materias, inscripciones, addToast])
 
   // ─── Resetear datos (útil para demos) ─────────────────────────────────────
   const resetearDatos = useCallback(() => {
