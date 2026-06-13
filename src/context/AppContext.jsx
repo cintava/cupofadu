@@ -244,9 +244,7 @@ export function AppProvider({ children }) {
       timestamp: new Date().toISOString(),
       detalle: 'Estudiante aceptó la vacante',
     }, ...prev])
-
-    addToast(`¡Inscripción confirmada en ${notif.materiaNombre}!`, 'success')
-  }, [notificaciones, inscripciones, recalcularPosiciones, addToast])
+  }, [notificaciones, inscripciones, recalcularPosiciones])
 
   // ─── Estudiante rechaza vacante ────────────────────────────────────────────
   const rechazarVacante = useCallback((notificacionId) => {
@@ -318,10 +316,8 @@ export function AppProvider({ children }) {
     setMaterias(prev => prev.map(m =>
       m.id === materiaId ? { ...m, inscriptos: m.inscriptos + 1 } : m
     ))
-    const nombreMateria = materia.nombre
-    addToast(`¡Inscripto en ${nombreMateria}!`, 'success')
     return { ok: true }
-  }, [materias, inscripciones, addToast])
+  }, [materias, inscripciones])
 
   // ─── Inscribirse en lista de espera (cuando está llena) ───────────────────
   const inscribirseEnEspera = useCallback((estudianteId, materiaId) => {
@@ -345,10 +341,8 @@ export function AppProvider({ children }) {
     const nuevasInscripciones = recalcularPosiciones([...inscripciones, nueva], materiaId)
     setInscripciones(nuevasInscripciones)
 
-    const posicion = nuevasInscripciones.find(i => i.id === nueva.id)?.posicion || 1
-    addToast(`Quedaste en lista de espera para ${materia?.nombre}. Posición #${posicion}.`, 'info')
     return { ok: true }
-  }, [materias, inscripciones, recalcularPosiciones, addToast])
+  }, [materias, inscripciones, recalcularPosiciones])
 
   // ─── Resetear datos (útil para demos) ─────────────────────────────────────
   const resetearDatos = useCallback(() => {
