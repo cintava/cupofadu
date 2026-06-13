@@ -2891,4 +2891,12 @@ body {
 
   .calendario-header { padding: 0.75rem; }
   .calendario-nav h2 { font-size: 1rem; }
+
+  .fab-button {
+    width: 48px;
+    height: 48px;
+    font-size: 1.5rem;
+    bottom: 1.5rem;
+    right: 1rem;
+  }
 }
