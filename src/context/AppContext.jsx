@@ -323,21 +323,20 @@ export function AppProvider({ children }) {
     if (yaExiste) return { ok: false, error: 'Ya estás inscripto o en lista de espera' }
 
     const materia = materias.find(m => m.id === materiaId)
+    const enEsperaParaEsta = inscripciones.filter(i => i.materiaId === materiaId && i.estado === 'espera')
+    const nuevaPosicion = enEsperaParaEsta.length + 1
 
     const nueva = {
       id: Date.now(),
       estudianteId,
       materiaId,
       estado: 'espera',
-      posicion: 1,
+      posicion: nuevaPosicion,
       timestamp: new Date().toISOString(),
     }
 
-    const nuevasInscripciones = recalcularPosiciones([...inscripciones, nueva], materiaId, estudiantes)
-    setInscripciones(nuevasInscripciones)
-
-    const posicion = nuevasInscripciones.find(i => i.id === nueva.id)?.posicion || 1
-    addToast(`Posición #${posicion}`, 'info')
+    setInscripciones(prev => [...prev, nueva])
+    addToast(`Posición #${nuevaPosicion}`, 'info')
     return { ok: true }
   }, [materias, inscripciones, addToast])
 
