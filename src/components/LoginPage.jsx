@@ -70,7 +70,7 @@ export default function LoginPage() {
           <p className="login-demo-title">DNI de prueba:</p>
           <div className="login-demo-users">
             {[
-              { dni: '12345', nombre: 'Cintia' },
+              { dni: '12345', nombre: 'Martina' },
               { dni: '67890', nombre: 'Tomás' },
               { dni: '11111', nombre: 'Valentina' },
               { dni: '22222', nombre: 'Matías' },
